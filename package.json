@@ -8,10 +8,12 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "server": "node server.js"
+    "server": "node server.js",
+    "start": "cross-env NODE_ENV=production node server.js"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.101.3",
+    "cross-env": "^10.1.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4"
   },

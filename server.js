@@ -1,4 +1,10 @@
 import jsonServer from 'json-server'
+import express from 'express'
+import path from 'path'
+import { fileURLToPath } from 'url'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 const server = jsonServer.create()
 const router = jsonServer.router('db.json')
@@ -20,6 +26,13 @@ const validator = (request, response, next) => {
 
 server.use(middlewares)
 server.use(jsonServer.bodyParser)
+if (process.env.NODE_ENV === 'production') {
+  const staticPath = path.join(__dirname, 'dist')
+  server.use(express.static(staticPath))
+  server.get('/*splat', (req, res) => {
+    res.sendFile(path.join(staticPath, 'index.html'))
+  })
+}
 server.use(validator)
 server.use(router)
 
