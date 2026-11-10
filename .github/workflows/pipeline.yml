@@ -35,3 +35,21 @@ jobs:
         name: playwright-report
         path: ./playwright-report/
         retention-days: 15
+  deploy:
+    needs: [build_and_test]
+    if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to Render
+        run: curl ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+  tag_release:
+    needs: [deploy]
+    runs-on: ubuntu-latest
+    if : ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
+    steps:
+      - uses: actions/checkout@v6
+      - name: Bump version and create tag
+        uses: anothrNick/github-tag-action@1.75.0
+        env: 
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BUMP: patch

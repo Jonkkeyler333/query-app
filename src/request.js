@@ -1,4 +1,6 @@
-const baseUrl = 'http://localhost:3001/anecdotes'
+const baseUrl = import.meta.env.VITE_API_URL
+    ? `${import.meta.env.VITE_API_URL}/anecdotes`
+    : 'http://localhost:3001/anecdotes'
 
 export const getAnecdotes = async () => {
     const response = await fetch(baseUrl)
