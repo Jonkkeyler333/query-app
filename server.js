@@ -26,6 +26,11 @@ const validator = (request, response, next) => {
 
 server.use(middlewares)
 server.use(jsonServer.bodyParser)
+
+server.get('/health',(req, res) => {
+  res.json({ status: 'ok' })
+})
+
 if (process.env.NODE_ENV === 'production') {
   const staticPath = path.join(__dirname, 'dist')
   server.use(express.static(staticPath))
