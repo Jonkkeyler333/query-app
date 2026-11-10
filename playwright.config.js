@@ -76,11 +76,8 @@ export default defineConfig({
 
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: 'node server.js',
+    command: 'npm run build && npm start',
     url: 'http://localhost:3001',
-    env: {
-      NODE_ENV: 'production',
-    },
     reuseExistingServer: !process.env.CI,
   },
 });
