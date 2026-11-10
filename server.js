@@ -26,20 +26,17 @@ const validator = (request, response, next) => {
   }
 }
 
+if (process.env.NODE_ENV === 'production') {
+  const staticPath = path.join(__dirname, 'dist')
+  server.use(express.static(staticPath))
+}
+
 server.use(middlewares)
 server.use(jsonServer.bodyParser)
 
 server.get('/health',(req, res) => {
   res.json({ status: 'ok' })
 })
-
-if (process.env.NODE_ENV === 'production') {
-  const staticPath = path.join(__dirname, 'dist')
-  server.use(express.static(staticPath))
-  server.get('/', (req, res) => {
-    res.sendFile(path.join(staticPath, 'index.html'))
-  })
-}
 
 server.use(validator)
 server.use(router)

@@ -79,6 +79,8 @@ export default defineConfig({
     command: 'npm run build && npm start',
     url: 'http://localhost:3001',
     reuseExistingServer: !process.env.CI,
+    stdout: 'pipe',
+    stderr: 'pipe',
   },
 });
 
