@@ -31,6 +31,9 @@ server.get('/health',(req, res) => {
   res.json({ status: 'ok' })
 })
 
+server.use(validator)
+server.use(router)
+
 if (process.env.NODE_ENV === 'production') {
   const staticPath = path.join(__dirname, 'dist')
   server.use(express.static(staticPath))
@@ -38,8 +41,6 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.join(staticPath, 'index.html'))
   })
 }
-server.use(validator)
-server.use(router)
 
 server.listen(3001, () => {
   console.log('JSON Server is running')
