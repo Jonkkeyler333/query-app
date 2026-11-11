@@ -24,6 +24,18 @@ export const createAnecdote = async (content) => {
     return await response.json()
 }
 
+export const deleteAnecdote = async (id) => {
+    const response = await fetch(`${baseUrl}/${id}`, {
+        method: 'DELETE'
+    })
+
+    if(!response.ok){
+        throw new Error('can not delete the anecdote')
+    }
+
+    return await response.json()
+}
+
 export const updateAnecdote = async (anecdote) => {
     const options = {
         method: 'PUT',

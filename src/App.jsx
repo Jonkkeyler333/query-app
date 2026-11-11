@@ -1,48 +1,25 @@
 import AnecdoteForm from './components/AnecdoteForm'
+import Anecdotes from './components/Anecdotes'
 import Notification from './components/Notification'
-import { useAnecdotes } from './hooks/useAnecdotes'
-import useNotification from './hooks/useNotify'
+import { Box, Container, Typography } from '@mui/material'
 
 const App = () => {
-  const { anecdotes, isPending, error, voteAnecdote } = useAnecdotes()
-  const { setNotification } = useNotification()
-
-  const handleVote = (anecdote) => {
-    console.log('vote')
-    console.log(anecdote)
-    voteAnecdote(anecdote)
-    setNotification(`anecdote '${anecdote.content}' voted`)
-  }
-
-  if(isPending){
-    return(
-      <div>Loading...</div>
-    )
-  }
-
-  if(error){
-    return(
-      <div>Anecdote service not available due to problems in server</div>
-    )
-  }
-  
   return (
-    <div>
-      <h1>Anecdote app</h1>
+    <Box sx={{ minHeight: '100vh', bgcolor: '#f3f6fb', py: 2 }}>
+      <Container maxWidth="sm" sx={{ mb: 4 }}>
+        <Typography
+          variant="h2"
+          component="h1"
+          sx={{ mb: 3, fontWeight: 700, letterSpacing: '-0.04em' }}
+        >
+          Anecdote app
+        </Typography>
 
-      <Notification />
-      <AnecdoteForm />
-
-      {anecdotes.map((anecdote) => (
-        <div key={anecdote.id}>
-          <div>{anecdote.content}</div>
-          <div>
-            has {anecdote.votes}
-            <button onClick={() => handleVote(anecdote)}>vote</button>
-          </div>
-        </div>
-      ))}
-    </div>
+        <Notification />
+        <AnecdoteForm />
+        <Anecdotes />
+      </Container>
+    </Box>
   )
 }
 
