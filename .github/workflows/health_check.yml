@@ -3,18 +3,18 @@ name: Health Check
 on:
   push:
     branches:
-      - ["xd"]  #todavia no quiero que se ejecute, dejo un nombre de rama que no existe para que no se ejecute
+      - main
   workflow_dispatch:
   schedule:
     - cron: '0 0 1 * *'
   
 jobs:
   health_check:
-  runs-on: ubuntu-latest
-  steps:
+   runs-on: ubuntu-latest
+   steps:
     - name: Check the deployed service
       uses: jtalk/url-health-check-action@v5
       with:
-        url: ${{ secrets.DEPLOY_URL}}
-        max-attempts: 3
-        retry-delay: 120s
+         url: ${{ secrets.DEPLOY_URL}}
+         max-attempts: 3
+         retry-delay: 220s #because the render free service needs to wake up :3
